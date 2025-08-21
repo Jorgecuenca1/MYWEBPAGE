@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-hdmwoyh1a)tv8*79k%g6=p=*^dg(!@sw@p*(@x)uwr$wwhthq(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*', 'solucionesfinancierasglobal.com', 'www.jorgecuenca.com','mivoto.corpofuturo.org','jorgecuenca.com']
 
 # Application definition
 
@@ -81,7 +80,22 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+CORS_ALLOWED_ORIGINS = [
+    "https://bitlink.com.co",
+    "https://www.jorgecuenca.com",
+    "https://jorgecuenca.com",
+]
 
+# En desarrollo, permitir cualquier origen (Flutter web en puertos variables)
+CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://bitlink.com.co",
+    "https://www.jorgecuenca.com",
+    "http://localhost:8000",
+    "https://jorgecuenca.com",
+    "http://127.0.0.1:8000"
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
