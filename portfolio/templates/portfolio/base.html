@@ -1,7 +1,6 @@
 {% load static %}
-{% load i18n %}
 <!DOCTYPE html>
-<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
+<html lang="{{ language|default:'es' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,38 +51,49 @@
                 
                 <ul class="nav-menu" id="nav-menu">
                     <li><a href="{% url 'portfolio:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-                        <i class="fas fa-home"></i> {% trans "Inicio" %}
+                        <i class="fas fa-home"></i> 
+                        <span class="nav-text">{{ translations.home }}</span>
                     </a></li>
                     <li><a href="{% url 'portfolio:sobre_mi' %}" class="nav-link {% if request.resolver_match.url_name == 'sobre_mi' %}active{% endif %}">
-                        <i class="fas fa-user"></i> {% trans "Sobre Mí" %}
+                        <i class="fas fa-user"></i> 
+                        <span class="nav-text">{{ translations.about }}</span>
                     </a></li>
                     <li><a href="{% url 'portfolio:habilidades' %}" class="nav-link {% if request.resolver_match.url_name == 'habilidades' %}active{% endif %}">
-                        <i class="fas fa-cogs"></i> {% trans "Habilidades" %}
+                        <i class="fas fa-cogs"></i> 
+                        <span class="nav-text">{{ translations.skills }}</span>
                     </a></li>
                     <li><a href="{% url 'portfolio:experiencia' %}" class="nav-link {% if request.resolver_match.url_name == 'experiencia' %}active{% endif %}">
-                        <i class="fas fa-briefcase"></i> {% trans "Experiencia" %}
+                        <i class="fas fa-briefcase"></i> 
+                        <span class="nav-text">{{ translations.experience }}</span>
                     </a></li>
                     <li><a href="{% url 'portfolio:proyectos' %}" class="nav-link {% if request.resolver_match.url_name == 'proyectos' %}active{% endif %}">
-                        <i class="fas fa-laptop-code"></i> {% trans "Proyectos" %}
+                        <i class="fas fa-laptop-code"></i> 
+                        <span class="nav-text">{{ translations.projects }}</span>
                     </a></li>
                     <li><a href="{% url 'portfolio:contacto' %}" class="nav-link {% if request.resolver_match.url_name == 'contacto' %}active{% endif %}">
-                        <i class="fas fa-envelope"></i> {% trans "Contacto" %}
+                        <i class="fas fa-envelope"></i> 
+                        <span class="nav-text">{{ translations.contact }}</span>
                     </a></li>
                     
-                    <!-- Language Selector -->
+                    <!-- Language Selector Mejorado -->
                     <li class="nav-language">
-                        <form action="{% url 'set_language' %}" method="post" id="language-form">
-                            {% csrf_token %}
-                            <select name="language" onchange="document.getElementById('language-form').submit();" class="language-selector">
-                                {% get_current_language as LANGUAGE_CODE %}
-                                {% get_available_languages as LANGUAGES %}
-                                {% for lang_code, lang_name in LANGUAGES %}
-                                    <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
-                                        {% if lang_code == 'es' %}🇪🇸 ES{% else %}🇺🇸 EN{% endif %}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </form>
+                        <div class="language-switcher">
+                            <form action="{% url 'portfolio:set_language' %}" method="post" id="language-form">
+                                {% csrf_token %}
+                                <div class="language-buttons">
+                                    <button type="submit" name="language" value="es" 
+                                            class="lang-btn {% if language == 'es' %}active{% endif %}" 
+                                            title="Español">
+                                        🇪🇸 ES
+                                    </button>
+                                    <button type="submit" name="language" value="en" 
+                                            class="lang-btn {% if language == 'en' %}active{% endif %}" 
+                                            title="English">
+                                        🇺🇸 EN
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </li>
                 </ul>
                 
@@ -105,8 +115,8 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; {{ current_year|default:"2024" }} Jorge Hernán Cuenca Marín. Todos los derechos reservados.</p>
-            <p>Desarrollado con <i class="fas fa-heart" style="color: #e74c3c;"></i> usando Django y mucha pasión por la tecnología.</p>
+            <p>&copy; {{ current_year|default:"2024" }} Jorge Hernán Cuenca Marín. {{ translations.rights_reserved|default:"Todos los derechos reservados." }}</p>
+            <p>{{ translations.developed_with|default:"Desarrollado con" }} <i class="fas fa-heart" style="color: #e74c3c;"></i> {{ translations.django_passion|default:"usando Django y mucha pasión por la tecnología." }}</p>
         </div>
     </footer>
 

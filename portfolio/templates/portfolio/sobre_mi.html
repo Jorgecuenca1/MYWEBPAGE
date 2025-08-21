@@ -9,8 +9,8 @@
 <section class="hero" style="min-height: 60vh;">
     <div class="container">
         <div class="hero-content">
-            <h1 class="hero-title">Sobre Mí</h1>
-            <p class="hero-subtitle">Conoce mi trayectoria profesional y académica</p>
+            <h1 class="hero-title">{{ translations.about_me }}</h1>
+            <p class="hero-subtitle">{{ translations.my_trajectory }}</p>
         </div>
     </div>
 </section>
@@ -20,48 +20,48 @@
     <div class="container">
         <div class="grid grid-2">
             <div class="card">
-                <h3><i class="fas fa-user"></i> Información Personal</h3>
+                <h3><i class="fas fa-user"></i> {{ translations.personal_info }}</h3>
                 {% if perfil %}
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-birthday-cake contact-icon"></i>
                         <div>
-                            <strong>Edad:</strong><br>
-                            28 años
+                            <strong>{{ translations.age }}:</strong><br>
+                            28 {{ translations.years }}
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt contact-icon"></i>
                         <div>
-                            <strong>Lugar de Nacimiento:</strong><br>
+                            <strong>{{ translations.birth_place }}:</strong><br>
                             {{ perfil.lugar_nacimiento }}
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-envelope contact-icon"></i>
                         <div>
-                            <strong>Email:</strong><br>
+                            <strong>{{ translations.email }}:</strong><br>
                             {{ perfil.email }}
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone contact-icon"></i>
                         <div>
-                            <strong>Teléfono:</strong><br>
+                            <strong>{{ translations.phone }}:</strong><br>
                             {{ perfil.telefono }}
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-id-card contact-icon"></i>
                         <div>
-                            <strong>Cédula:</strong><br>
+                            <strong>{{ translations.id_number }}:</strong><br>
                             {{ perfil.cedula }}
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-car contact-icon"></i>
                         <div>
-                            <strong>Licencia de Conducción:</strong><br>
+                            <strong>{{ translations.license }}:</strong><br>
                             {{ perfil.licencia_conduccion }}
                         </div>
                     </div>
@@ -70,7 +70,7 @@
             </div>
             
             <div class="card">
-                <h3><i class="fas fa-quote-left"></i> Biografía</h3>
+                <h3><i class="fas fa-quote-left"></i> {{ translations.biography }}</h3>
                 {% if perfil %}
                 <p>{{ perfil.biografia|linebreaks }}</p>
                 {% endif %}
@@ -82,20 +82,20 @@
 <!-- Formación Académica -->
 <section class="section" style="background: var(--bg-secondary);">
     <div class="container">
-        <h2 class="section-title">Formación Académica</h2>
+        <h2 class="section-title">{{ translations.academic_formation }}</h2>
         <div class="timeline">
             {% for edu in educacion %}
             <div class="timeline-item">
                 <h3 class="timeline-title">{{ edu.titulo }}</h3>
                 <div class="timeline-company">{{ edu.institucion }}</div>
-                <p><strong>Nivel:</strong> {{ edu.get_nivel_display }}</p>
+                <p><strong>{{ translations.level }}:</strong> {{ edu.get_nivel_display }}</p>
                 {% if edu.descripcion %}
                 <p>{{ edu.descripcion }}</p>
                 {% endif %}
             </div>
             {% empty %}
             <div class="timeline-item">
-                <p>Información educativa próximamente...</p>
+                <p>{{ translations.coming_soon }}</p>
             </div>
             {% endfor %}
         </div>
@@ -106,7 +106,7 @@
 {% if certificaciones %}
 <section class="section">
     <div class="container">
-        <h2 class="section-title">Certificaciones</h2>
+        <h2 class="section-title">{{ translations.certifications }}</h2>
         <div class="grid grid-3">
             {% for cert in certificaciones %}
             <div class="card">
@@ -117,7 +117,7 @@
                 <p><strong>{{ cert.organizacion }}</strong></p>
                 {% if cert.url_verificacion %}
                 <a href="{{ cert.url_verificacion }}" target="_blank" class="btn btn-outline btn-sm">
-                    <i class="fas fa-external-link-alt"></i> Verificar
+                    <i class="fas fa-external-link-alt"></i> {{ translations.verify }}
                 </a>
                 {% endif %}
             </div>

@@ -9,8 +9,8 @@
 <section class="hero" style="min-height: 60vh;">
     <div class="container">
         <div class="hero-content">
-            <h1 class="hero-title">Habilidades Técnicas</h1>
-            <p class="hero-subtitle">Tecnologías y herramientas que domino</p>
+            <h1 class="hero-title">{{ translations.technical_skills }}</h1>
+            <p class="hero-subtitle">{{ translations.tech_tools }}</p>
         </div>
     </div>
 </section>
@@ -36,8 +36,8 @@
                         </div>
                         <div class="mt-2">
                             <small>
-                                <strong>Nivel:</strong> {{ habilidad.get_nivel_display }} | 
-                                <strong>Experiencia:</strong> {{ habilidad.años_experiencia }} años
+                                <strong>{{ translations.level }}:</strong> {{ habilidad.get_nivel_display }} | 
+                                <strong>{{ translations.experience_years }}:</strong> {{ habilidad.años_experiencia }} {{ translations.years }}
                             </small>
                         </div>
                         {% if habilidad.descripcion %}
@@ -50,7 +50,7 @@
         </div>
         {% empty %}
         <div class="text-center">
-            <p>Habilidades próximamente...</p>
+            <p>{{ translations.coming_soon }}</p>
         </div>
         {% endfor %}
     </div>
@@ -59,27 +59,27 @@
 <!-- Resumen de Habilidades -->
 <section class="section" style="background: var(--bg-secondary);">
     <div class="container">
-        <h2 class="section-title">Resumen de Experiencia</h2>
+        <h2 class="section-title">{{ translations.experience_summary }}</h2>
         <div class="grid grid-4">
             <div class="card text-center">
                 <i class="fas fa-code fa-3x text-primary mb-2"></i>
                 <h3 class="counter" data-target="6">0</h3>
-                <p>Años de Experiencia</p>
+                <p>{{ translations.experience_years }}</p>
             </div>
             <div class="card text-center">
                 <i class="fas fa-brain fa-3x text-primary mb-2"></i>
                 <h3 class="counter" data-target="25">0</h3>
-                <p>Tecnologías de IA</p>
+                <p>{{ translations.ai_technologies }}</p>
             </div>
             <div class="card text-center">
                 <i class="fas fa-laptop-code fa-3x text-primary mb-2"></i>
                 <h3 class="counter" data-target="50">0</h3>
-                <p>Proyectos Completados</p>
+                <p>{{ translations.completed_projects }}</p>
             </div>
             <div class="card text-center">
                 <i class="fas fa-cloud fa-3x text-primary mb-2"></i>
                 <h3 class="counter" data-target="3">0</h3>
-                <p>Plataformas Cloud</p>
+                <p>{{ translations.cloud_platforms }}</p>
             </div>
         </div>
     </div>

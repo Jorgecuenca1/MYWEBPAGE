@@ -17,19 +17,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== MOBILE MENU TOGGLE =====
     if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function() {
+        console.log('Mobile menu initialized'); // Debug
+        
+        navToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Menu toggle clicked'); // Debug
             navMenu.classList.toggle('active');
             
             // Animate hamburger menu
             const spans = navToggle.querySelectorAll('span');
             if (navMenu.classList.contains('active')) {
+                console.log('Menu opened'); // Debug
                 spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
                 spans[1].style.opacity = '0';
                 spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                document.body.style.overflow = 'hidden'; // Prevent scroll
             } else {
+                console.log('Menu closed'); // Debug
                 spans[0].style.transform = 'none';
                 spans[1].style.opacity = '1';
                 spans[2].style.transform = 'none';
+                document.body.style.overflow = 'auto'; // Restore scroll
             }
         });
 
@@ -37,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function() {
                 navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
                 
                 // Reset hamburger menu
                 const spans = navToggle.querySelectorAll('span');
@@ -50,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('click', function(e) {
             if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
                 navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
                 
                 // Reset hamburger menu
                 const spans = navToggle.querySelectorAll('span');

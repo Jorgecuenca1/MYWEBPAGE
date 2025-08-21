@@ -12,4 +12,5 @@ urlpatterns = [
     path('proyecto/<int:proyecto_id>/', views.proyecto_detalle, name='proyecto_detalle'),
     path('contacto/', views.contacto, name='contacto'),
     path('api/habilidades/', views.api_habilidades, name='api_habilidades'),
+    path('set-language/', views.set_language, name='set_language'),
 ]

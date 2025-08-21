@@ -9,8 +9,8 @@
 <section class="hero" style="min-height: 60vh;">
     <div class="container">
         <div class="hero-content">
-            <h1 class="hero-title">Contacto</h1>
-            <p class="hero-subtitle">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+            <h1 class="hero-title">{{ translations.contact }}</h1>
+            <p class="hero-subtitle">{{ translations.have_project }}</p>
         </div>
     </div>
 </section>
@@ -20,27 +20,27 @@
     <div class="container">
         <div class="grid grid-2">
             <div class="card">
-                <h3><i class="fas fa-envelope"></i> Información de Contacto</h3>
+                <h3><i class="fas fa-envelope"></i> {{ translations.contact_info }}</h3>
                 {% if perfil %}
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope contact-icon"></i>
                         <div>
-                            <strong>Email:</strong><br>
+                            <strong>{{ translations.email }}:</strong><br>
                             <a href="mailto:{{ perfil.email }}">{{ perfil.email }}</a>
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone contact-icon"></i>
                         <div>
-                            <strong>Teléfono:</strong><br>
+                            <strong>{{ translations.phone }}:</strong><br>
                             <a href="tel:{{ perfil.telefono }}">{{ perfil.telefono }}</a>
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt contact-icon"></i>
                         <div>
-                            <strong>Ubicación:</strong><br>
+                            <strong>{{ translations.location }}:</strong><br>
                             {{ perfil.direccion }}<br>
                             {{ perfil.lugar_nacimiento }}
                         </div>
@@ -51,7 +51,7 @@
                 <!-- Redes Sociales -->
                 {% if redes_sociales %}
                 <div class="mt-4">
-                    <h4>Sígueme en:</h4>
+                    <h4>{{ translations.follow_me }}</h4>
                     <div class="social-links">
                         {% for red in redes_sociales %}
                         <a href="{{ red.url }}" target="_blank" class="social-link" title="{{ red.plataforma|title }}">
@@ -78,16 +78,16 @@
             </div>
             
             <div class="card">
-                <h3><i class="fas fa-briefcase"></i> Servicios</h3>
+                <h3><i class="fas fa-briefcase"></i> {{ translations.services }}</h3>
                 <ul style="list-style: none; padding: 0;">
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Desarrollo de Software con IA</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Consultoría en Machine Learning</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Desarrollo Web con Django</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Aplicaciones Móviles con Flutter</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Automatización de Procesos</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Arquitectura Cloud</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Realidad Aumentada/Virtual</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Entrenamiento de Modelos LLM</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.ai_software_dev }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.ml_consulting }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.django_web_dev }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.flutter_mobile }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.process_automation }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.cloud_architecture }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.ar_vr_dev }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.llm_training }}</li>
                 </ul>
             </div>
         </div>
@@ -97,35 +97,35 @@
 <!-- Formulario de Contacto -->
 <section class="section" style="background: var(--bg-secondary);">
     <div class="container">
-        <h2 class="section-title">Envíame un Mensaje</h2>
+        <h2 class="section-title">{{ translations.send_message }}</h2>
         <div class="card" style="max-width: 800px; margin: 0 auto;">
             <form id="contact-form" method="post">
                 {% csrf_token %}
                 <div class="grid grid-2">
                     <div>
-                        <label for="nombre">Nombre *</label>
+                        <label for="nombre">{{ translations.name }} *</label>
                         <input type="text" id="nombre" name="nombre" required 
                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem;">
                     </div>
                     <div>
-                        <label for="email">Email *</label>
+                        <label for="email">{{ translations.email }} *</label>
                         <input type="email" id="email" name="email" required 
                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem;">
                     </div>
                 </div>
                 <div>
-                    <label for="asunto">Asunto *</label>
+                    <label for="asunto">{{ translations.subject }} *</label>
                     <input type="text" id="asunto" name="asunto" required 
                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem;">
                 </div>
                 <div>
-                    <label for="mensaje">Mensaje *</label>
+                    <label for="mensaje">{{ translations.message }} *</label>
                     <textarea id="mensaje" name="mensaje" rows="6" required 
                               style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem; resize: vertical;"></textarea>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-paper-plane"></i> Enviar Mensaje
+                        <i class="fas fa-paper-plane"></i> {{ translations.send_message }}
                     </button>
                 </div>
             </form>
@@ -137,22 +137,22 @@
 <section class="section">
     <div class="container">
         <div class="text-center">
-            <h2 class="section-title">Disponibilidad</h2>
+            <h2 class="section-title">{{ translations.availability }}</h2>
             <div class="grid grid-3">
                 <div class="card text-center">
                     <i class="fas fa-clock fa-2x text-primary mb-2"></i>
-                    <h4>Horario</h4>
-                    <p>Lunes a Viernes<br>8:00 AM - 6:00 PM</p>
+                    <h4>{{ translations.schedule }}</h4>
+                    <p>{{ translations.weekdays }}<br>{{ translations.hours }}</p>
                 </div>
                 <div class="card text-center">
                     <i class="fas fa-globe fa-2x text-primary mb-2"></i>
-                    <h4>Zona Horaria</h4>
-                    <p>GMT-5<br>Bogotá, Colombia</p>
+                    <h4>{{ translations.timezone }}</h4>
+                    <p>{{ translations.bogota_time|safe }}</p>
                 </div>
                 <div class="card text-center">
                     <i class="fas fa-reply fa-2x text-primary mb-2"></i>
-                    <h4>Respuesta</h4>
-                    <p>Dentro de 24 horas<br>en días hábiles</p>
+                    <h4>{{ translations.response }}</h4>
+                    <p>{{ translations.within_24h|safe }}</p>
                 </div>
             </div>
         </div>

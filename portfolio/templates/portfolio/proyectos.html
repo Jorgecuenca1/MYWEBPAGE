@@ -9,8 +9,8 @@
 <section class="hero" style="min-height: 60vh;">
     <div class="container">
         <div class="hero-content">
-            <h1 class="hero-title">Mis Proyectos</h1>
-            <p class="hero-subtitle">Soluciones tecnológicas que he desarrollado</p>
+            <h1 class="hero-title">{{ translations.my_projects }}</h1>
+            <p class="hero-subtitle">{{ translations.solutions_developed }}</p>
         </div>
     </div>
 </section>
@@ -34,7 +34,7 @@
                     <p class="project-description">{{ proyecto.descripcion_corta }}</p>
                     
                     <div class="mb-3">
-                        <strong>Estado:</strong> 
+                        <strong>{{ translations.status }}:</strong> 
                         <span class="tech-tag" style="background: {% if proyecto.estado == 'completado' %}#10b981{% else %}#f59e0b{% endif %}; color: white;">
                             {{ proyecto.get_estado_display }}
                         </span>
@@ -55,24 +55,24 @@
                     <div class="project-links">
                         {% if proyecto.url_demo %}
                         <a href="{{ proyecto.url_demo }}" target="_blank" class="btn btn-primary btn-sm">
-                            <i class="fas fa-external-link-alt"></i> Ver Sitio
+                            <i class="fas fa-external-link-alt"></i> {{ translations.see_site }}
                         </a>
                         {% endif %}
                         {% if proyecto.url_codigo %}
                         <a href="{{ proyecto.url_codigo }}" target="_blank" class="btn btn-outline btn-sm">
-                            <i class="fab fa-github"></i> Código
+                            <i class="fab fa-github"></i> {{ translations.code }}
                         </a>
                         {% endif %}
                         <a href="{% url 'portfolio:proyecto_detalle' proyecto.id %}" class="btn btn-outline btn-sm">
-                            <i class="fas fa-info-circle"></i> Detalles
+                            <i class="fas fa-info-circle"></i> {{ translations.details }}
                         </a>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="card text-center">
-                <h3>Proyectos próximamente</h3>
-                <p>Estoy trabajando en documentar todos mis proyectos.</p>
+                <h3>{{ translations.coming_soon }}</h3>
+                <p>{{ translations.available_projects }}</p>
             </div>
             {% endfor %}
         </div>
@@ -82,27 +82,27 @@
 <!-- Estadísticas de Proyectos -->
 <section class="section" style="background: var(--bg-secondary);">
     <div class="container">
-        <h2 class="section-title">Estadísticas de Proyectos</h2>
+        <h2 class="section-title">{{ translations.project_stats }}</h2>
         <div class="grid grid-4">
             <div class="card text-center">
                 <i class="fas fa-laptop-code fa-3x text-primary mb-2"></i>
                 <h3 class="counter" data-target="{{ proyectos|length }}">0</h3>
-                <p>Proyectos Completados</p>
+                <p>{{ translations.completed_projects }}</p>
             </div>
             <div class="card text-center">
                 <i class="fas fa-building fa-3x text-primary mb-2"></i>
                 <h3 class="counter" data-target="3">0</h3>
-                <p>Entidades Públicas</p>
+                <p>{{ translations.public_entities }}</p>
             </div>
             <div class="card text-center">
                 <i class="fas fa-robot fa-3x text-primary mb-2"></i>
                 <h3 class="counter" data-target="2">0</h3>
-                <p>Proyectos con IA</p>
+                <p>{{ translations.ai_projects }}</p>
             </div>
             <div class="card text-center">
                 <i class="fas fa-globe fa-3x text-primary mb-2"></i>
                 <h3 class="counter" data-target="6">0</h3>
-                <p>Sitios Web Activos</p>
+                <p>{{ translations.active_websites }}</p>
             </div>
         </div>
     </div>

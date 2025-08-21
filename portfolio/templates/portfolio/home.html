@@ -1,7 +1,6 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
 {% load portfolio_extras %}
-{% load i18n %}
 
 {% block title %}Jorge Hernán Cuenca Marín - Ingeniero Electrónico & Especialista en IA{% endblock %}
 
@@ -11,16 +10,16 @@
     <div class="container">
         <div class="hero-content">
             <h1 class="hero-title">Jorge Hernán Cuenca Marín</h1>
-            <p class="hero-subtitle">{% trans "Ingeniero Electrónico | Especialista en Inteligencia Artificial" %}</p>
+            <p class="hero-subtitle">{{ translations.engineer_title }}</p>
             <p class="hero-description">
-                {% trans "Experto en desarrollo de software con IA, Machine Learning y más de 6 años de experiencia en Django. Especialista en crear soluciones tecnológicas innovadoras que transforman procesos empresariales y optimizan la eficiencia organizacional mediante inteligencia artificial avanzada." %}
+                {{ translations.hero_description }}
             </p>
             <div class="hero-buttons">
                 <a href="{% url 'portfolio:proyectos' %}" class="btn btn-primary">
-                    <i class="fas fa-laptop-code"></i> {% trans "Ver Proyectos" %}
+                    <i class="fas fa-laptop-code"></i> {{ translations.view_projects }}
                 </a>
                 <a href="{% url 'portfolio:contacto' %}" class="btn btn-secondary">
-                    <i class="fas fa-envelope"></i> {% trans "Contactar" %}
+                    <i class="fas fa-envelope"></i> {{ translations.contact_me }}
                 </a>
             </div>
         </div>
@@ -30,53 +29,53 @@
 <!-- Sobre Mí - Resumen -->
 <section class="section" id="about-preview">
     <div class="container">
-        <h2 class="section-title">{% trans "Sobre Mí" %}</h2>
+        <h2 class="section-title">{{ translations.about_me }}</h2>
         <div class="grid grid-2">
             <div class="card fade-in-up">
                 <div class="card-header">
                     <h3 class="card-title">
-                        <i class="fas fa-graduation-cap"></i> {% trans "Formación Académica" %}
+                        <i class="fas fa-graduation-cap"></i> {{ translations.academic_formation }}
                     </h3>
                 </div>
                 {% if perfil %}
-                <p><strong>Edad:</strong> 28 años</p>
-                <p><strong>Ubicación:</strong> {{ perfil.lugar_nacimiento }}</p>
-                <p><strong>Email:</strong> {{ perfil.email }}</p>
-                <p><strong>Teléfono:</strong> {{ perfil.telefono }}</p>
+                <p><strong>{{ translations.age }}:</strong> 28 {{ translations.years }}</p>
+                <p><strong>{{ translations.location }}:</strong> {{ perfil.lugar_nacimiento }}</p>
+                <p><strong>{{ translations.email }}:</strong> {{ perfil.email }}</p>
+                <p><strong>{{ translations.phone }}:</strong> {{ perfil.telefono }}</p>
                 {% endif %}
                 
                 <div class="mt-3">
-                    <h4>Educación Destacada:</h4>
+                    <h4>{{ translations.education_highlighted }}</h4>
                     {% for edu in educacion %}
                     <div class="mb-2">
                         <strong>{{ edu.titulo }}</strong><br>
                         <small class="text-secondary">{{ edu.institucion }}</small>
                     </div>
                     {% empty %}
-                    <p>Información de educación próximamente...</p>
+                    <p>{{ translations.coming_soon }}</p>
                     {% endfor %}
                 </div>
                 
                 <a href="{% url 'portfolio:sobre_mi' %}" class="btn btn-outline mt-3">
-                    <i class="fas fa-user"></i> Conocer Más
+                    <i class="fas fa-user"></i> {{ translations.learn_more }}
                 </a>
             </div>
             
             <div class="card fade-in-up">
                 <div class="card-header">
                     <h3 class="card-title">
-                        <i class="fas fa-rocket"></i> Especialidades
+                        <i class="fas fa-rocket"></i> {{ translations.specialties }}
                     </h3>
                 </div>
                 <ul style="list-style: none; padding: 0;">
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Inteligencia Artificial & Machine Learning</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Desarrollo Django & Python (6+ años)</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Modelos LLM (Llama 2, GPT, etc.)</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Visión por Computadora & NLP</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Arquitectura Cloud (AWS, GCP, Azure)</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.ai_software_dev }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.django_web_dev }} (6+ {{ translations.years_experience }})</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.llm_training }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.ml_consulting }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.cloud_architecture }}</li>
                     <li class="mb-2"><i class="fas fa-check text-primary"></i> DevOps & Kubernetes</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Desarrollo Móvil con Flutter</li>
-                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Realidad Aumentada & Virtual</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.flutter_mobile }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> {{ translations.ar_vr_dev }}</li>
                 </ul>
             </div>
         </div>
@@ -86,7 +85,7 @@
 <!-- Habilidades Destacadas -->
 <section class="section" style="background: var(--bg-secondary);">
     <div class="container">
-        <h2 class="section-title">Habilidades Principales</h2>
+        <h2 class="section-title">{{ translations.main_skills }}</h2>
         <div class="grid grid-4">
             {% for habilidad in habilidades_destacadas %}
             <div class="card text-center fade-in-up">
@@ -104,17 +103,17 @@
                         <span class="skill-percentage">{{ habilidad.porcentaje }}%</span>
                     </div>
                 </div>
-                <p><small>{{ habilidad.años_experiencia }} años de experiencia</small></p>
+                <p><small>{{ habilidad.años_experiencia }} {{ translations.years_experience }}</small></p>
             </div>
             {% empty %}
             <div class="card text-center">
-                <p>Habilidades próximamente...</p>
+                <p>{{ translations.coming_soon }}</p>
             </div>
             {% endfor %}
         </div>
         <div class="text-center mt-4">
             <a href="{% url 'portfolio:habilidades' %}" class="btn btn-primary">
-                <i class="fas fa-cogs"></i> Ver Todas las Habilidades
+                <i class="fas fa-cogs"></i> {{ translations.all_skills }}
             </a>
         </div>
     </div>
@@ -123,7 +122,7 @@
 <!-- Experiencia Reciente -->
 <section class="section">
     <div class="container">
-        <h2 class="section-title">Experiencia Reciente</h2>
+        <h2 class="section-title">{{ translations.recent_experience }}</h2>
         <div class="timeline">
             {% for exp in experiencias_recientes %}
             <div class="timeline-item fade-in-up">
@@ -144,7 +143,7 @@
         </div>
         <div class="text-center mt-4">
             <a href="{% url 'portfolio:experiencia' %}" class="btn btn-outline">
-                <i class="fas fa-briefcase"></i> Ver Experiencia Completa
+                <i class="fas fa-briefcase"></i> {{ translations.full_experience }}
             </a>
         </div>
     </div>
@@ -153,7 +152,7 @@
 <!-- Proyectos Destacados -->
 <section class="section" style="background: var(--bg-secondary);">
     <div class="container">
-        <h2 class="section-title">Proyectos Destacados</h2>
+        <h2 class="section-title">{{ translations.featured_projects }}</h2>
         <div class="grid grid-3">
             {% for proyecto in proyectos_destacados %}
             <div class="project-card fade-in-up">
@@ -188,13 +187,13 @@
             </div>
             {% empty %}
             <div class="card text-center">
-                <p>Proyectos próximamente...</p>
+                <p>{{ translations.coming_soon }}</p>
             </div>
             {% endfor %}
         </div>
         <div class="text-center mt-4">
             <a href="{% url 'portfolio:proyectos' %}" class="btn btn-primary">
-                <i class="fas fa-laptop-code"></i> Ver Todos los Proyectos
+                <i class="fas fa-laptop-code"></i> {{ translations.all_projects }}
             </a>
         </div>
     </div>
@@ -204,8 +203,8 @@
 <section class="section">
     <div class="container">
         <div class="text-center">
-            <h2 class="section-title">¿Interesado en Colaborar?</h2>
-            <p class="mb-4">Estoy disponible para proyectos de desarrollo de software, consultoría en IA y colaboraciones tecnológicas.</p>
+            <h2 class="section-title">{{ translations.interested_collaborate }}</h2>
+            <p class="mb-4">{{ translations.available_projects }}</p>
             
             {% if redes_sociales %}
             <div class="social-links">
@@ -232,9 +231,9 @@
             {% endif %}
             
             <div class="mt-4">
-                <a href="{% url 'portfolio:contacto' %}" class="btn btn-primary btn-lg">
-                    <i class="fas fa-envelope"></i> Contactar Ahora
-                </a>
+                            <a href="{% url 'portfolio:contacto' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-envelope"></i> {{ translations.contact_now }}
+            </a>
             </div>
         </div>
     </div>
