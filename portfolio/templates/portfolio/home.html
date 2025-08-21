@@ -1,0 +1,291 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load portfolio_extras %}
+{% load i18n %}
+
+{% block title %}Jorge Hernán Cuenca Marín - Ingeniero Electrónico & Especialista en IA{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Jorge Hernán Cuenca Marín</h1>
+            <p class="hero-subtitle">{% trans "Ingeniero Electrónico | Especialista en Inteligencia Artificial" %}</p>
+            <p class="hero-description">
+                {% trans "Experto en desarrollo de software con IA, Machine Learning y más de 6 años de experiencia en Django. Especialista en crear soluciones tecnológicas innovadoras que transforman procesos empresariales y optimizan la eficiencia organizacional mediante inteligencia artificial avanzada." %}
+            </p>
+            <div class="hero-buttons">
+                <a href="{% url 'portfolio:proyectos' %}" class="btn btn-primary">
+                    <i class="fas fa-laptop-code"></i> {% trans "Ver Proyectos" %}
+                </a>
+                <a href="{% url 'portfolio:contacto' %}" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i> {% trans "Contactar" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sobre Mí - Resumen -->
+<section class="section" id="about-preview">
+    <div class="container">
+        <h2 class="section-title">{% trans "Sobre Mí" %}</h2>
+        <div class="grid grid-2">
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-graduation-cap"></i> {% trans "Formación Académica" %}
+                    </h3>
+                </div>
+                {% if perfil %}
+                <p><strong>Edad:</strong> 28 años</p>
+                <p><strong>Ubicación:</strong> {{ perfil.lugar_nacimiento }}</p>
+                <p><strong>Email:</strong> {{ perfil.email }}</p>
+                <p><strong>Teléfono:</strong> {{ perfil.telefono }}</p>
+                {% endif %}
+                
+                <div class="mt-3">
+                    <h4>Educación Destacada:</h4>
+                    {% for edu in educacion %}
+                    <div class="mb-2">
+                        <strong>{{ edu.titulo }}</strong><br>
+                        <small class="text-secondary">{{ edu.institucion }}</small>
+                    </div>
+                    {% empty %}
+                    <p>Información de educación próximamente...</p>
+                    {% endfor %}
+                </div>
+                
+                <a href="{% url 'portfolio:sobre_mi' %}" class="btn btn-outline mt-3">
+                    <i class="fas fa-user"></i> Conocer Más
+                </a>
+            </div>
+            
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-rocket"></i> Especialidades
+                    </h3>
+                </div>
+                <ul style="list-style: none; padding: 0;">
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Inteligencia Artificial & Machine Learning</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Desarrollo Django & Python (6+ años)</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Modelos LLM (Llama 2, GPT, etc.)</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Visión por Computadora & NLP</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Arquitectura Cloud (AWS, GCP, Azure)</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> DevOps & Kubernetes</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Desarrollo Móvil con Flutter</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Realidad Aumentada & Virtual</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Habilidades Destacadas -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <h2 class="section-title">Habilidades Principales</h2>
+        <div class="grid grid-4">
+            {% for habilidad in habilidades_destacadas %}
+            <div class="card text-center fade-in-up">
+                <div class="card-header">
+                    <i class="fas fa-{{ habilidad.categoria.icono|default:'cog' }} fa-2x text-primary mb-2"></i>
+                    <h4 class="card-title">{{ habilidad.nombre }}</h4>
+                    <p class="card-subtitle">{{ habilidad.categoria.nombre }}</p>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: {{ habilidad.porcentaje }}%;"></div>
+                    </div>
+                    <div class="skill-header mt-2">
+                        <span class="skill-name">{{ habilidad.nivel|title }}</span>
+                        <span class="skill-percentage">{{ habilidad.porcentaje }}%</span>
+                    </div>
+                </div>
+                <p><small>{{ habilidad.años_experiencia }} años de experiencia</small></p>
+            </div>
+            {% empty %}
+            <div class="card text-center">
+                <p>Habilidades próximamente...</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'portfolio:habilidades' %}" class="btn btn-primary">
+                <i class="fas fa-cogs"></i> Ver Todas las Habilidades
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Experiencia Reciente -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Experiencia Reciente</h2>
+        <div class="timeline">
+            {% for exp in experiencias_recientes %}
+            <div class="timeline-item fade-in-up">
+                <h3 class="timeline-title">{{ exp.titulo }}</h3>
+                <div class="timeline-company">{{ exp.empresa }}</div>
+                <p>{{ exp.descripcion|truncatewords:30 }}</p>
+                <div class="project-tech mt-2">
+                    {% for tech in exp.tecnologias|split:"," %}
+                    <span class="tech-tag">{{ tech|strip }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="timeline-item">
+                <p>Experiencia próximamente...</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'portfolio:experiencia' %}" class="btn btn-outline">
+                <i class="fas fa-briefcase"></i> Ver Experiencia Completa
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Proyectos Destacados -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <h2 class="section-title">Proyectos Destacados</h2>
+        <div class="grid grid-3">
+            {% for proyecto in proyectos_destacados %}
+            <div class="project-card fade-in-up">
+                {% if proyecto.imagen_principal %}
+                <img src="{{ proyecto.imagen_principal.url }}" alt="{{ proyecto.nombre }}" class="project-image">
+                {% else %}
+                <div class="project-image" style="background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-laptop-code fa-3x"></i>
+                </div>
+                {% endif %}
+                <div class="project-content">
+                    <h3 class="project-title">{{ proyecto.nombre }}</h3>
+                    <p class="project-description">{{ proyecto.descripcion_corta }}</p>
+                    <div class="project-tech">
+                        {% for tech in proyecto.tecnologias|split:","  %}
+                        <span class="tech-tag">{{ tech|strip }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="project-links">
+                        {% if proyecto.url_demo %}
+                        <a href="{{ proyecto.url_demo }}" target="_blank" class="btn btn-primary btn-sm">
+                            <i class="fas fa-external-link-alt"></i> Demo
+                        </a>
+                        {% endif %}
+                        {% if proyecto.url_codigo %}
+                        <a href="{{ proyecto.url_codigo }}" target="_blank" class="btn btn-outline btn-sm">
+                            <i class="fab fa-github"></i> Código
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="card text-center">
+                <p>Proyectos próximamente...</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'portfolio:proyectos' %}" class="btn btn-primary">
+                <i class="fas fa-laptop-code"></i> Ver Todos los Proyectos
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Contacto Rápido -->
+<section class="section">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">¿Interesado en Colaborar?</h2>
+            <p class="mb-4">Estoy disponible para proyectos de desarrollo de software, consultoría en IA y colaboraciones tecnológicas.</p>
+            
+            {% if redes_sociales %}
+            <div class="social-links">
+                {% for red in redes_sociales %}
+                <a href="{{ red.url }}" target="_blank" class="social-link" title="{{ red.plataforma|title }}">
+                    {% if red.plataforma == 'linkedin' %}
+                        <i class="fab fa-linkedin-in"></i>
+                    {% elif red.plataforma == 'github' %}
+                        <i class="fab fa-github"></i>
+                    {% elif red.plataforma == 'twitter' %}
+                        <i class="fab fa-twitter"></i>
+                    {% elif red.plataforma == 'instagram' %}
+                        <i class="fab fa-instagram"></i>
+                    {% elif red.plataforma == 'youtube' %}
+                        <i class="fab fa-youtube"></i>
+                    {% elif red.plataforma == 'website' %}
+                        <i class="fas fa-globe"></i>
+                    {% else %}
+                        <i class="fas fa-link"></i>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="mt-4">
+                <a href="{% url 'portfolio:contacto' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-envelope"></i> Contactar Ahora
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animaciones al hacer scroll
+document.addEventListener('DOMContentLoaded', function() {
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Animate skill bars when visible
+    const skillBars = document.querySelectorAll('.skill-progress');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            }
+        });
+    });
+
+    skillBars.forEach(bar => observer.observe(bar));
+
+    // Mobile menu toggle
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+    });
+});
+</script>
+{% endblock %}

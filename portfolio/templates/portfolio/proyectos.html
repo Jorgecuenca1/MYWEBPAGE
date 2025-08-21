@@ -1,0 +1,141 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load portfolio_extras %}
+
+{% block title %}Proyectos - Jorge Hernán Cuenca Marín{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="min-height: 60vh;">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Mis Proyectos</h1>
+            <p class="hero-subtitle">Soluciones tecnológicas que he desarrollado</p>
+        </div>
+    </div>
+</section>
+
+<!-- Proyectos -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-2">
+            {% for proyecto in proyectos %}
+            <div class="project-card fade-in-up">
+                {% if proyecto.imagen_principal %}
+                <img src="{{ proyecto.imagen_principal.url }}" alt="{{ proyecto.nombre }}" class="project-image">
+                {% else %}
+                <div class="project-image" style="background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-laptop-code fa-3x"></i>
+                </div>
+                {% endif %}
+                
+                <div class="project-content">
+                    <h3 class="project-title">{{ proyecto.nombre }}</h3>
+                    <p class="project-description">{{ proyecto.descripcion_corta }}</p>
+                    
+                    <div class="mb-3">
+                        <strong>Estado:</strong> 
+                        <span class="tech-tag" style="background: {% if proyecto.estado == 'completado' %}#10b981{% else %}#f59e0b{% endif %}; color: white;">
+                            {{ proyecto.get_estado_display }}
+                        </span>
+                    </div>
+                    
+
+                    
+                    <div class="project-tech mb-3">
+                        {% for tech in proyecto.tecnologias|split:","  %}
+                        <span class="tech-tag">{{ tech|strip }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="project-description mb-3">
+                        <p>{{ proyecto.descripcion|linebreaks|truncatewords:50 }}</p>
+                    </div>
+                    
+                    <div class="project-links">
+                        {% if proyecto.url_demo %}
+                        <a href="{{ proyecto.url_demo }}" target="_blank" class="btn btn-primary btn-sm">
+                            <i class="fas fa-external-link-alt"></i> Ver Sitio
+                        </a>
+                        {% endif %}
+                        {% if proyecto.url_codigo %}
+                        <a href="{{ proyecto.url_codigo }}" target="_blank" class="btn btn-outline btn-sm">
+                            <i class="fab fa-github"></i> Código
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'portfolio:proyecto_detalle' proyecto.id %}" class="btn btn-outline btn-sm">
+                            <i class="fas fa-info-circle"></i> Detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="card text-center">
+                <h3>Proyectos próximamente</h3>
+                <p>Estoy trabajando en documentar todos mis proyectos.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Estadísticas de Proyectos -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <h2 class="section-title">Estadísticas de Proyectos</h2>
+        <div class="grid grid-4">
+            <div class="card text-center">
+                <i class="fas fa-laptop-code fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="{{ proyectos|length }}">0</h3>
+                <p>Proyectos Completados</p>
+            </div>
+            <div class="card text-center">
+                <i class="fas fa-building fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="3">0</h3>
+                <p>Entidades Públicas</p>
+            </div>
+            <div class="card text-center">
+                <i class="fas fa-robot fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="2">0</h3>
+                <p>Proyectos con IA</p>
+            </div>
+            <div class="card text-center">
+                <i class="fas fa-globe fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="6">0</h3>
+                <p>Sitios Web Activos</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Counter animation
+    const counters = document.querySelectorAll('.counter');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current);
+                }, 16);
+            }
+        });
+    });
+
+    counters.forEach(counter => observer.observe(counter));
+});
+</script>
+{% endblock %}

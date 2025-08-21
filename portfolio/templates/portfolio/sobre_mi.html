@@ -1,0 +1,129 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load portfolio_extras %}
+
+{% block title %}Sobre Mí - Jorge Hernán Cuenca Marín{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="min-height: 60vh;">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Sobre Mí</h1>
+            <p class="hero-subtitle">Conoce mi trayectoria profesional y académica</p>
+        </div>
+    </div>
+</section>
+
+<!-- Información Personal -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-2">
+            <div class="card">
+                <h3><i class="fas fa-user"></i> Información Personal</h3>
+                {% if perfil %}
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-birthday-cake contact-icon"></i>
+                        <div>
+                            <strong>Edad:</strong><br>
+                            28 años
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <div>
+                            <strong>Lugar de Nacimiento:</strong><br>
+                            {{ perfil.lugar_nacimiento }}
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <div>
+                            <strong>Email:</strong><br>
+                            {{ perfil.email }}
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <div>
+                            <strong>Teléfono:</strong><br>
+                            {{ perfil.telefono }}
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-id-card contact-icon"></i>
+                        <div>
+                            <strong>Cédula:</strong><br>
+                            {{ perfil.cedula }}
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-car contact-icon"></i>
+                        <div>
+                            <strong>Licencia de Conducción:</strong><br>
+                            {{ perfil.licencia_conduccion }}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="card">
+                <h3><i class="fas fa-quote-left"></i> Biografía</h3>
+                {% if perfil %}
+                <p>{{ perfil.biografia|linebreaks }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Formación Académica -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <h2 class="section-title">Formación Académica</h2>
+        <div class="timeline">
+            {% for edu in educacion %}
+            <div class="timeline-item">
+                <h3 class="timeline-title">{{ edu.titulo }}</h3>
+                <div class="timeline-company">{{ edu.institucion }}</div>
+                <p><strong>Nivel:</strong> {{ edu.get_nivel_display }}</p>
+                {% if edu.descripcion %}
+                <p>{{ edu.descripcion }}</p>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="timeline-item">
+                <p>Información educativa próximamente...</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Certificaciones -->
+{% if certificaciones %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Certificaciones</h2>
+        <div class="grid grid-3">
+            {% for cert in certificaciones %}
+            <div class="card">
+                {% if cert.imagen %}
+                <img src="{{ cert.imagen.url }}" alt="{{ cert.nombre }}" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 1rem;">
+                {% endif %}
+                <h4>{{ cert.nombre }}</h4>
+                <p><strong>{{ cert.organizacion }}</strong></p>
+                {% if cert.url_verificacion %}
+                <a href="{{ cert.url_verificacion }}" target="_blank" class="btn btn-outline btn-sm">
+                    <i class="fas fa-external-link-alt"></i> Verificar
+                </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

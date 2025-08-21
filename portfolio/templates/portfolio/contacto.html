@@ -1,0 +1,185 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load portfolio_extras %}
+
+{% block title %}Contacto - Jorge Hernán Cuenca Marín{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="min-height: 60vh;">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Contacto</h1>
+            <p class="hero-subtitle">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+        </div>
+    </div>
+</section>
+
+<!-- Información de Contacto -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-2">
+            <div class="card">
+                <h3><i class="fas fa-envelope"></i> Información de Contacto</h3>
+                {% if perfil %}
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <div>
+                            <strong>Email:</strong><br>
+                            <a href="mailto:{{ perfil.email }}">{{ perfil.email }}</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <div>
+                            <strong>Teléfono:</strong><br>
+                            <a href="tel:{{ perfil.telefono }}">{{ perfil.telefono }}</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <div>
+                            <strong>Ubicación:</strong><br>
+                            {{ perfil.direccion }}<br>
+                            {{ perfil.lugar_nacimiento }}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Redes Sociales -->
+                {% if redes_sociales %}
+                <div class="mt-4">
+                    <h4>Sígueme en:</h4>
+                    <div class="social-links">
+                        {% for red in redes_sociales %}
+                        <a href="{{ red.url }}" target="_blank" class="social-link" title="{{ red.plataforma|title }}">
+                            {% if red.plataforma == 'linkedin' %}
+                                <i class="fab fa-linkedin-in"></i>
+                            {% elif red.plataforma == 'github' %}
+                                <i class="fab fa-github"></i>
+                            {% elif red.plataforma == 'twitter' %}
+                                <i class="fab fa-twitter"></i>
+                            {% elif red.plataforma == 'instagram' %}
+                                <i class="fab fa-instagram"></i>
+                            {% elif red.plataforma == 'youtube' %}
+                                <i class="fab fa-youtube"></i>
+                            {% elif red.plataforma == 'website' %}
+                                <i class="fas fa-globe"></i>
+                            {% else %}
+                                <i class="fas fa-link"></i>
+                            {% endif %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="card">
+                <h3><i class="fas fa-briefcase"></i> Servicios</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Desarrollo de Software con IA</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Consultoría en Machine Learning</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Desarrollo Web con Django</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Aplicaciones Móviles con Flutter</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Automatización de Procesos</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Arquitectura Cloud</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Realidad Aumentada/Virtual</li>
+                    <li class="mb-2"><i class="fas fa-check text-primary"></i> Entrenamiento de Modelos LLM</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Formulario de Contacto -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <h2 class="section-title">Envíame un Mensaje</h2>
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+            <form id="contact-form" method="post">
+                {% csrf_token %}
+                <div class="grid grid-2">
+                    <div>
+                        <label for="nombre">Nombre *</label>
+                        <input type="text" id="nombre" name="nombre" required 
+                               style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem;">
+                    </div>
+                    <div>
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required 
+                               style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem;">
+                    </div>
+                </div>
+                <div>
+                    <label for="asunto">Asunto *</label>
+                    <input type="text" id="asunto" name="asunto" required 
+                           style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem;">
+                </div>
+                <div>
+                    <label for="mensaje">Mensaje *</label>
+                    <textarea id="mensaje" name="mensaje" rows="6" required 
+                              style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem; resize: vertical;"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Enviar Mensaje
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Disponibilidad -->
+<section class="section">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">Disponibilidad</h2>
+            <div class="grid grid-3">
+                <div class="card text-center">
+                    <i class="fas fa-clock fa-2x text-primary mb-2"></i>
+                    <h4>Horario</h4>
+                    <p>Lunes a Viernes<br>8:00 AM - 6:00 PM</p>
+                </div>
+                <div class="card text-center">
+                    <i class="fas fa-globe fa-2x text-primary mb-2"></i>
+                    <h4>Zona Horaria</h4>
+                    <p>GMT-5<br>Bogotá, Colombia</p>
+                </div>
+                <div class="card text-center">
+                    <i class="fas fa-reply fa-2x text-primary mb-2"></i>
+                    <h4>Respuesta</h4>
+                    <p>Dentro de 24 horas<br>en días hábiles</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contact-form');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Aquí puedes agregar la lógica para enviar el formulario
+        // Por ahora, solo mostramos un mensaje de confirmación
+        
+        const formData = new FormData(form);
+        const nombre = formData.get('nombre');
+        
+        // Simular envío exitoso
+        setTimeout(() => {
+            alert(`¡Gracias ${nombre}! Tu mensaje ha sido enviado. Te responderé pronto.`);
+            form.reset();
+        }, 1000);
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Configuración Inicial - Portfolio{% endblock %}
+
+{% block content %}
+<section class="section" style="min-height: 80vh; display: flex; align-items: center;">
+    <div class="container">
+        <div class="text-center">
+            <h1>🚀 ¡Bienvenido al Portfolio de Jorge Cuenca!</h1>
+            <p class="mb-4">El sistema está configurado correctamente. Para completar la configuración:</p>
+            
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <h3>Pasos siguientes:</h3>
+                <ol style="text-align: left;">
+                    <li>Accede al <a href="/admin/" target="_blank">Panel de Administración</a></li>
+                    <li>Usa las credenciales: <strong>admin / admin123</strong></li>
+                    <li>Los datos básicos ya están cargados</li>
+                    <li>Puedes agregar proyectos, experiencias y más información</li>
+                </ol>
+                
+                <div class="mt-4">
+                    <a href="/admin/" class="btn btn-primary" target="_blank">
+                        <i class="fas fa-cog"></i> Ir al Admin
+                    </a>
+                    <a href="{% url 'portfolio:home' %}" class="btn btn-outline">
+                        <i class="fas fa-home"></i> Ver Portfolio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

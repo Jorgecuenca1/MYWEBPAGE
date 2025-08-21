@@ -1,0 +1,110 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load portfolio_extras %}
+
+{% block title %}Habilidades - Jorge Hernán Cuenca Marín{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="min-height: 60vh;">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Habilidades Técnicas</h1>
+            <p class="hero-subtitle">Tecnologías y herramientas que domino</p>
+        </div>
+    </div>
+</section>
+
+<!-- Habilidades por Categorías -->
+<section class="section">
+    <div class="container">
+        {% for categoria in categorias %}
+        <div class="mb-4">
+            <h2 class="section-title">
+                <i class="fas fa-{{ categoria.icono|default:'cog' }}"></i> {{ categoria.nombre }}
+            </h2>
+            <div class="grid grid-2">
+                {% for habilidad in categoria.habilidades.all %}
+                <div class="card">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">{{ habilidad.nombre }}</span>
+                            <span class="skill-percentage">{{ habilidad.porcentaje }}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: {{ habilidad.porcentaje }}%;"></div>
+                        </div>
+                        <div class="mt-2">
+                            <small>
+                                <strong>Nivel:</strong> {{ habilidad.get_nivel_display }} | 
+                                <strong>Experiencia:</strong> {{ habilidad.años_experiencia }} años
+                            </small>
+                        </div>
+                        {% if habilidad.descripcion %}
+                        <p class="mt-2"><small>{{ habilidad.descripcion }}</small></p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center">
+            <p>Habilidades próximamente...</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Resumen de Habilidades -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <h2 class="section-title">Resumen de Experiencia</h2>
+        <div class="grid grid-4">
+            <div class="card text-center">
+                <i class="fas fa-code fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="6">0</h3>
+                <p>Años de Experiencia</p>
+            </div>
+            <div class="card text-center">
+                <i class="fas fa-brain fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="25">0</h3>
+                <p>Tecnologías de IA</p>
+            </div>
+            <div class="card text-center">
+                <i class="fas fa-laptop-code fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="50">0</h3>
+                <p>Proyectos Completados</p>
+            </div>
+            <div class="card text-center">
+                <i class="fas fa-cloud fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="3">0</h3>
+                <p>Plataformas Cloud</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate skill bars when visible
+    const skillBars = document.querySelectorAll('.skill-progress');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 200);
+            }
+        });
+    });
+
+    skillBars.forEach(bar => observer.observe(bar));
+});
+</script>
+{% endblock %}

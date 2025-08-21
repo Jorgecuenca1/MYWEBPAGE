@@ -1,0 +1,233 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load portfolio_extras %}
+
+{% block title %}Experiencia - Jorge Hernán Cuenca Marín{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="min-height: 60vh;">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Experiencia Profesional</h1>
+            <p class="hero-subtitle">Mi trayectoria en desarrollo de software e IA</p>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline de Experiencia -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Experiencia Laboral</h2>
+        <div class="timeline">
+            {% for exp in experiencias %}
+            <div class="timeline-item fade-in-up">
+                <h3 class="timeline-title">{{ exp.titulo }}
+                    {% if exp.actual %}
+                    <span class="tech-tag" style="background: #10b981; color: white; margin-left: 10px;">
+                        <i class="fas fa-circle" style="font-size: 8px;"></i> Activo
+                    </span>
+                    {% endif %}
+                </h3>
+                <div class="timeline-company">
+                    <i class="fas fa-building"></i> {{ exp.empresa }}
+                    <span class="tech-tag" style="margin-left: 10px;">{{ exp.get_tipo_display }}</span>
+                </div>
+                
+                <div class="mt-3">
+                    <p>{{ exp.descripcion|linebreaks }}</p>
+                </div>
+                
+                {% if exp.tecnologias %}
+                <div class="mt-3">
+                    <strong>Tecnologías utilizadas:</strong>
+                    <div class="project-tech mt-2">
+                        {% for tech in exp.tecnologias|split:"," %}
+                        <span class="tech-tag">{{ tech|strip }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if exp.logros %}
+                <div class="mt-3">
+                    <strong>Logros principales:</strong>
+                    <div class="mt-2">
+                        {{ exp.logros|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if exp.url_proyecto %}
+                <div class="mt-3">
+                    <a href="{{ exp.url_proyecto }}" target="_blank" class="btn btn-outline btn-sm">
+                        <i class="fas fa-external-link-alt"></i> Ver Proyecto
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="timeline-item">
+                <h3>Experiencia próximamente</h3>
+                <p>Estoy documentando mi experiencia profesional.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Proyectos Destacados Relacionados -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <h2 class="section-title">Proyectos Destacados Desarrollados</h2>
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-shield-alt fa-2x text-primary mb-2"></i>
+                    <h4>Seguroslavictoria.com.co</h4>
+                </div>
+                <p>Plataforma completa de seguros con sistema de cotizaciones automáticas y gestión de pólizas.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Django</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+                <a href="https://seguroslavictoria.com.co" target="_blank" class="btn btn-outline btn-sm mt-2">
+                    <i class="fas fa-external-link-alt"></i> Ver Sitio
+                </a>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-university fa-2x text-primary mb-2"></i>
+                    <h4>Instituto de Cultura del Meta</h4>
+                </div>
+                <p>Portal web oficial para entidad pública con gestión de eventos culturales y sistema administrativo.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Django</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Gov Standards</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-robot fa-2x text-primary mb-2"></i>
+                    <h4>Chat de IA Empresarial</h4>
+                </div>
+                <p>Sistema de chatbot inteligente con procesamiento de lenguaje natural para atención automatizada.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">TensorFlow</span>
+                    <span class="tech-tag">NLP</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-stamp fa-2x text-primary mb-2"></i>
+                    <h4>Sistema de Estampilla Electrónica</h4>
+                </div>
+                <p>Software especializado para recaudo de estampilla electrónica en entidad pública con integración DIAN.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Django</span>
+                    <span class="tech-tag">API DIAN</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-globe fa-2x text-primary mb-2"></i>
+                    <h4>Corpofuturo.org</h4>
+                </div>
+                <p>Portal institucional con sistema de gestión de contenidos y eventos para corporación.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Django</span>
+                    <span class="tech-tag">CMS</span>
+                    <span class="tech-tag">SEO</span>
+                </div>
+                <a href="https://www.corpofuturo.org" target="_blank" class="btn btn-outline btn-sm mt-2">
+                    <i class="fas fa-external-link-alt"></i> Ver Sitio
+                </a>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-code fa-2x text-primary mb-2"></i>
+                    <h4>Mogi.org</h4>
+                </div>
+                <p>Plataforma web avanzada con sistema de gestión integral y API REST robusta.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Django</span>
+                    <span class="tech-tag">API REST</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                </div>
+                <a href="https://mogi.org" target="_blank" class="btn btn-outline btn-sm mt-2">
+                    <i class="fas fa-external-link-alt"></i> Ver Sitio
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Estadísticas de Experiencia -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Resumen de Experiencia</h2>
+        <div class="grid grid-4">
+            <div class="card text-center">
+                <i class="fas fa-calendar fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="6">0</h3>
+                <p>Años de Experiencia</p>
+            </div>
+            <div class="card text-center">
+                <i class="fas fa-laptop-code fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="6">0</h3>
+                <p>Proyectos Principales</p>
+            </div>
+            <div class="card text-center">
+                <i class="fas fa-building fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="3">0</h3>
+                <p>Entidades Públicas</p>
+            </div>
+            <div class="card text-center">
+                <i class="fas fa-brain fa-3x text-primary mb-2"></i>
+                <h3 class="counter" data-target="2">0</h3>
+                <p>Proyectos con IA</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Counter animation
+    const counters = document.querySelectorAll('.counter');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current);
+                }, 16);
+            }
+        });
+    });
+
+    counters.forEach(counter => observer.observe(counter));
+});
+</script>
+{% endblock %}

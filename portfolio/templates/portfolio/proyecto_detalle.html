@@ -1,0 +1,151 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load portfolio_extras %}
+
+{% block title %}{{ proyecto.nombre }} - Jorge Hernán Cuenca Marín{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" style="min-height: 50vh;">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">{{ proyecto.nombre }}</h1>
+            <p class="hero-subtitle">{{ proyecto.descripcion_corta }}</p>
+        </div>
+    </div>
+</section>
+
+<!-- Detalles del Proyecto -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-2">
+            <div class="card">
+                {% if proyecto.imagen_principal %}
+                <img src="{{ proyecto.imagen_principal.url }}" alt="{{ proyecto.nombre }}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                {% else %}
+                <div style="width: 100%; height: 300px; background: var(--gradient-primary); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 1rem;">
+                    <i class="fas fa-laptop-code fa-4x"></i>
+                </div>
+                {% endif %}
+                
+                <div class="project-links">
+                    {% if proyecto.url_demo %}
+                    <a href="{{ proyecto.url_demo }}" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt"></i> Ver Sitio Web
+                    </a>
+                    {% endif %}
+                    {% if proyecto.url_codigo %}
+                    <a href="{{ proyecto.url_codigo }}" target="_blank" class="btn btn-outline">
+                        <i class="fab fa-github"></i> Ver Código
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Información del Proyecto</h3>
+                
+                <div class="contact-info">
+
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-tasks contact-icon"></i>
+                        <div>
+                            <strong>Estado:</strong><br>
+                            <span class="tech-tag" style="background: {% if proyecto.estado == 'completado' %}#10b981{% else %}#f59e0b{% endif %}; color: white;">
+                                {{ proyecto.get_estado_display }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    {% if proyecto.destacado %}
+                    <div class="contact-item">
+                        <i class="fas fa-star contact-icon"></i>
+                        <div>
+                            <strong>Proyecto Destacado</strong><br>
+                            <small>Este es uno de mis proyectos más importantes</small>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mt-4">
+                    <h4>Tecnologías Utilizadas</h4>
+                    <div class="project-tech">
+                        {% for tech in proyecto.tecnologias|split:","  %}
+                        <span class="tech-tag">{{ tech|strip }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Descripción Detallada -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <h2 class="section-title">Descripción del Proyecto</h2>
+        <div class="card">
+            <div class="project-description">
+                {{ proyecto.descripcion|linebreaks }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Proyectos Relacionados -->
+{% if proyectos_relacionados %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Otros Proyectos</h2>
+        <div class="grid grid-3">
+            {% for proyecto_rel in proyectos_relacionados %}
+            <div class="project-card">
+                {% if proyecto_rel.imagen_principal %}
+                <img src="{{ proyecto_rel.imagen_principal.url }}" alt="{{ proyecto_rel.nombre }}" class="project-image">
+                {% else %}
+                <div class="project-image" style="background: var(--gradient-secondary); display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-laptop-code fa-2x"></i>
+                </div>
+                {% endif %}
+                
+                <div class="project-content">
+                    <h4 class="project-title">{{ proyecto_rel.nombre }}</h4>
+                    <p class="project-description">{{ proyecto_rel.descripcion_corta|truncatewords:15 }}</p>
+                    
+                    <div class="project-tech">
+                        {% for tech in proyecto_rel.tecnologias|split:","  %}
+                        {% if forloop.counter <= 3 %}
+                        <span class="tech-tag">{{ tech|strip }}</span>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="project-links mt-3">
+                        <a href="{% url 'portfolio:proyecto_detalle' proyecto_rel.id %}" class="btn btn-outline btn-sm">
+                            <i class="fas fa-info-circle"></i> Ver Detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Navegación -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <div class="text-center">
+            <a href="{% url 'portfolio:proyectos' %}" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Volver a Proyectos
+            </a>
+            <a href="{% url 'portfolio:contacto' %}" class="btn btn-outline">
+                <i class="fas fa-envelope"></i> Contactar para Proyecto Similar
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

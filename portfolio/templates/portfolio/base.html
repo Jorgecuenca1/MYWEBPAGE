@@ -1,0 +1,122 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Jorge Hernán Cuenca Marín - Ingeniero Electrónico & Especialista en IA{% endblock %}</title>
+    
+    <!-- Meta tags para SEO -->
+    <meta name="description" content="{% block description %}Portfolio profesional de Jorge Hernán Cuenca Marín, Ingeniero Electrónico especialista en Inteligencia Artificial y desarrollo de software{% endblock %}">
+    <meta name="keywords" content="Jorge Cuenca, Ingeniero Electrónico, Inteligencia Artificial, Django, Python, Machine Learning, Desarrollo Software">
+    <meta name="author" content="Jorge Hernán Cuenca Marín">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Jorge Hernán Cuenca Marín - Portfolio Profesional{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Ingeniero Electrónico especialista en IA con más de 6 años de experiencia en desarrollo de software{% endblock %}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta property="twitter:title" content="{% block twitter_title %}Jorge Hernán Cuenca Marín - Portfolio{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}Especialista en IA y desarrollo de software{% endblock %}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <!-- CSS adicional por página -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="{% url 'portfolio:home' %}" class="nav-logo">
+                    <i class="fas fa-code"></i> Jorge Cuenca
+                </a>
+                
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="{% url 'portfolio:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                        <i class="fas fa-home"></i> {% trans "Inicio" %}
+                    </a></li>
+                    <li><a href="{% url 'portfolio:sobre_mi' %}" class="nav-link {% if request.resolver_match.url_name == 'sobre_mi' %}active{% endif %}">
+                        <i class="fas fa-user"></i> {% trans "Sobre Mí" %}
+                    </a></li>
+                    <li><a href="{% url 'portfolio:habilidades' %}" class="nav-link {% if request.resolver_match.url_name == 'habilidades' %}active{% endif %}">
+                        <i class="fas fa-cogs"></i> {% trans "Habilidades" %}
+                    </a></li>
+                    <li><a href="{% url 'portfolio:experiencia' %}" class="nav-link {% if request.resolver_match.url_name == 'experiencia' %}active{% endif %}">
+                        <i class="fas fa-briefcase"></i> {% trans "Experiencia" %}
+                    </a></li>
+                    <li><a href="{% url 'portfolio:proyectos' %}" class="nav-link {% if request.resolver_match.url_name == 'proyectos' %}active{% endif %}">
+                        <i class="fas fa-laptop-code"></i> {% trans "Proyectos" %}
+                    </a></li>
+                    <li><a href="{% url 'portfolio:contacto' %}" class="nav-link {% if request.resolver_match.url_name == 'contacto' %}active{% endif %}">
+                        <i class="fas fa-envelope"></i> {% trans "Contacto" %}
+                    </a></li>
+                    
+                    <!-- Language Selector -->
+                    <li class="nav-language">
+                        <form action="{% url 'set_language' %}" method="post" id="language-form">
+                            {% csrf_token %}
+                            <select name="language" onchange="document.getElementById('language-form').submit();" class="language-selector">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% for lang_code, lang_name in LANGUAGES %}
+                                    <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                                        {% if lang_code == 'es' %}🇪🇸 ES{% else %}🇺🇸 EN{% endif %}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </li>
+                </ul>
+                
+                <div class="nav-toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; {{ current_year|default:"2024" }} Jorge Hernán Cuenca Marín. Todos los derechos reservados.</p>
+            <p>Desarrollado con <i class="fas fa-heart" style="color: #e74c3c;"></i> usando Django y mucha pasión por la tecnología.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    <!-- JavaScript adicional por página -->
+    {% block extra_js %}{% endblock %}
+    
+    <!-- Analytics (opcional) -->
+    {% block analytics %}{% endblock %}
+</body>
+</html>
